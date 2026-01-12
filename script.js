@@ -58,7 +58,7 @@ async function yangilash() {
 
 // Yangi funksiya: Ma'lumotni o'chirish (ID bo'yicha qidirib o'chiradi)
 async function deleteTolov(itemId) {
-    // SheetDB API orqali 'id' bo'yicha o'chiramiz
+    // SheetDB API orqali 'id' bo'yicha o'chirishingiz mumkin
     const deleteUrl = `${API_URL}/${itemId}`;
     
     await fetch(deleteUrl, {
