@@ -1,4 +1,4 @@
-const API_URL = "https://sheetdb.io/api/v1/jmvg2ddwy79z3"; 
+const API_URL = "sheetdb.io"; 
 
 async function tolovniSaqlash() {
     const ismInput = document.getElementById('bolaIsmi');
@@ -10,7 +10,7 @@ async function tolovniSaqlash() {
     if (bolaIsmi && summa) {
         const data = {
             "data": {
-                "Bola ismi": bolaIsmi, // Google Sheets ustun nomi bilan mos bo'lishi shart
+                "Bola ismi": bolaIsmi,
                 "Summa": summa,
                 "Sana": sana
             }
@@ -26,7 +26,7 @@ async function tolovniSaqlash() {
 
         ismInput.value = '';
         summaInput.value = '';
-        yangilash(); // Saqlagandan keyin ro'yxatni yangilash
+        yangilash(); 
     }
 }
 
@@ -39,12 +39,28 @@ async function yangilash() {
 
     royxatDiv.innerHTML = '';
     // Ma'lumotlarni teskari tartibda ko'rsatish (eng yangisi tepada)
-    data.reverse().forEach(item => {
+    data.reverse().forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'tolov-item';
-        div.textContent = `👤 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}`;
+        // HTML kontentiga o'chirish tugmasini va uning funksiyasini qo'shamiz
+        div.innerHTML = `
+            👤 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}
+            <button class="delete-btn" onclick="deleteTolov('${item['Sana']}')">O'chirish</button>
+        `;
         royxatDiv.appendChild(div);
     });
+}
+
+// Yangi funksiya: Ma'lumotni o'chirish (Sana bo'yicha qidirib o'chiradi)
+async function deleteTolov(sana) {
+    // SheetDB API orqali "Sana" ustunidagi qiymat bo'yicha o'chiramiz
+    const deleteUrl = `${API_URL}/Sana/${encodeURIComponent(sana)}`;
+    
+    await fetch(deleteUrl, {
+        method: 'DELETE'
+    });
+    
+    yangilash(); // O'chirgandan keyin ro'yxatni yangilash
 }
 
 // Sahifa yuklanganda ma'lumotlarni avtomatik yuklash
