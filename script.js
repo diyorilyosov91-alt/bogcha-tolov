@@ -46,7 +46,7 @@ async function yangilash() {
             const itemId = item.id; 
 
             div.innerHTML = `
-                👤 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}
+                 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}
                 <button class="delete-btn" onclick="deleteTolov('${itemId}')">O'chirish</button>
             `;
             royxatDiv.appendChild(div);
