@@ -1,27 +1,15 @@
-<!DOCTYPE html>
-<html lang="uz">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bog'cha to'lovlari</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Bog'cha to'lovlarini qayd etish</h1>
-        <label for="bolaIsmi">Bolaning ismi:</label>
-        <input type="text" id="bolaIsmi" placeholder="Ismni kiriting">
-        
-        <label for="summa">To'lov summasi:</label>
-        <input type="number" id="summa" placeholder="Summani kiriting">
-        
-        <button onclick="tolovniSaqlash()">Saqlash</button>
-
-        <h2>Kiritilgan to'lovlar ro'yxati:</h2>
-        <div id="royxat">
-            <!-- Ma'lumotlar bu yerda paydo bo'ladi -->
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+<!-- index.html fayliga qo'shimcha CSS stil -->
+<style>
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right; /* Tugmani o'ngga suradi */
+}
+.delete-btn:hover {
+    background-color: #da190b;
+}
+</style>
