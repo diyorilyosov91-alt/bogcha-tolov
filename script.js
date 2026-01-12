@@ -38,23 +38,28 @@ async function yangilash() {
     const data = await response.json();
 
     royxatDiv.innerHTML = '';
-    // Ma'lumotlarni teskari tartibda ko'rsatish (eng yangisi tepada)
-    data.reverse().forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'tolov-item';
-        // HTML kontentiga o'chirish tugmasini va uning funksiyasini qo'shamiz
-        div.innerHTML = `
-            👤 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}
-            <button class="delete-btn" onclick="deleteTolov('${item['Sana']}')">O'chirish</button>
-        `;
-        royxatDiv.appendChild(div);
-    });
+    if (data && Array.isArray(data)) {
+        data.reverse().forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'tolov-item';
+            // ID ni 'id' maydonidan olamiz, SheetDB uni avtomatik qo'shadi
+            const itemId = item.id; 
+
+            div.innerHTML = `
+                👤 ${item['Bola ismi']} | ${item['Summa']} so'm | ${item['Sana']}
+                <button class="delete-btn" onclick="deleteTolov('${itemId}')">O'chirish</button>
+            `;
+            royxatDiv.appendChild(div);
+        });
+    } else {
+        royxatDiv.innerHTML = 'Ma\'lumotlar topilmadi yoki yuklashda xato!';
+    }
 }
 
-// Yangi funksiya: Ma'lumotni o'chirish (Sana bo'yicha qidirib o'chiradi)
-async function deleteTolov(sana) {
-    // SheetDB API orqali "Sana" ustunidagi qiymat bo'yicha o'chiramiz
-    const deleteUrl = `${API_URL}/Sana/${encodeURIComponent(sana)}`;
+// Yangi funksiya: Ma'lumotni o'chirish (ID bo'yicha qidirib o'chiradi)
+async function deleteTolov(itemId) {
+    // SheetDB API orqali 'id' bo'yicha o'chiramiz
+    const deleteUrl = `${API_URL}/${itemId}`;
     
     await fetch(deleteUrl, {
         method: 'DELETE'
@@ -63,5 +68,4 @@ async function deleteTolov(sana) {
     yangilash(); // O'chirgandan keyin ro'yxatni yangilash
 }
 
-// Sahifa yuklanganda ma'lumotlarni avtomatik yuklash
 yangilash();
